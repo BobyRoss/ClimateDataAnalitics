@@ -31,6 +31,7 @@ climateData <- climateData[-c(which(climateData$Year == 1962)), ]
 climateData <- climateData[-c(which(climateData$Year == 1979)), ]
 
 print(summary(climateData))
+print(climateData)
 #     Mean  Median
 #Year 1986  1987
 #T    11.45 11.00
@@ -49,3 +50,17 @@ print(summary(climateData))
 #and so when we compute it, we will be doing math with an NA (a non-number).
 #since we cant do any mathematical operations on non-numbers, it will result in an NA.
 print(sd(climateData$T, na.rm = TRUE))
+vec1 <- seq(from = 1939, to = 2030 , 10)
+listOfYears <- c("1940-1949", "1950-1959", "1960-1969", "1970-1979", "1980-1989", "1990-1999", "2000-2009", "2010-2019", "2020-2029")
+yearsCut <- cut(climateData$Year, breaks=vec1, labels = listOfYears)
+tappedPP <- tapply(climateData$PP, yearsCut, sum, na.rm = TRUE)
+totalP <- sum(climateData$PP, na.rm = TRUE)
+PPPercentage <- c(tappedPP[1]/totalP, tappedPP[2]/totalP, tappedPP[3]/totalP, tappedPP[4]/totalP, tappedPP[5]/totalP, tappedPP[6]/totalP, tappedPP[7]/totalP, tappedPP[8]/totalP, tappedPP[9]/totalP)
+Colors <- c("white", "antiquewhite4", "aliceblue", "antiquewhite3", "antiquewhite", "antiquewhite2", "burlywood4", "burlywood", "burlywood3")
+
+paste(PPPercentage, collapse = "_")
+
+combined <- paste(listOfYears, paste(round(PPPercentage*100, 2), "%"))
+
+
+pie(PPPercentage,combined, col=Colors, main="Percipitation by decade")
