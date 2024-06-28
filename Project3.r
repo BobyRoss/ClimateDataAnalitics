@@ -25,5 +25,5 @@ animals[2] <- "german shepard"
 
 yearTF <- duplicated(climateData$"Year")
 print(which(yearTF == TRUE))
-climateData <- climateData[-c(19, 33, 67), ]
+climateData <- climateData[-c(which(yearTF == TRUE)), ]
 print(climateData)
