@@ -12,3 +12,4 @@ for(isna in climateData) {
    i<-i+1
 }
 print(i);
+#new
