@@ -1,4 +1,5 @@
 climateData <- read.csv("C:\\Users\\sougou.tojima\\Documents\\ClimateData.csv")
+graphics.off()
 #print(summary(climateData))
 #Printing a data will just print the whole excel spreadsheet on the terminal.
 #Printing a summary prints all the important data informations such as the min/max or the mean/medians.
@@ -73,6 +74,8 @@ climateData$extreme <- c(climateData$SN+climateData$TS+climateData$TN+climateDat
 print(climateData)
 
 boxplot(climateData$extreme)
-which(Year, min(climateData$extreme))
-which(Year, max(climateData$extreme))
-text()
+small <- which(climateData$extreme == min(climateData$extreme))
+big<- which(climateData$extreme == max(climateData$extreme))
+boxplot(climateData$extreme)
+text(x=1, y = 7, labels = climateData$Year[small])
+text(x=1, y = 51, labels = climateData$Year[big])
