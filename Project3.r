@@ -12,4 +12,13 @@ for(isna in climateData) {
    i<-i+1
 }
 print(i);
-#new
+
+#In total, there are 12 "NA"s in the data
+
+#a)
+#animals[2] <- "german shepard"
+animals <- c("cat", "dog", "giraffe", "bunny")
+animals[2] <- "german shepard"
+cat(animals)
+#b)
+#They represent the columns (the vertical part)
