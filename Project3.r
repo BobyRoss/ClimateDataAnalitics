@@ -1,5 +1,4 @@
 climateData <- read.csv("C:\\Users\\sougou.tojima\\Documents\\ClimateData.csv")
-graphics.off()
 #print(summary(climateData))
 #Printing a data will just print the whole excel spreadsheet on the terminal.
 #Printing a summary prints all the important data informations such as the min/max or the mean/medians.
@@ -55,7 +54,7 @@ print(summary(climateData))
 #the 70's had little precipitation because the percipitation amounts were not recorded in the data.
 #most of the data for the 70's were NA, and so got skipped, resulting in low numbers.
 
-
+#pie chart below
 print(sd(climateData$T, na.rm = TRUE))
 vec1 <- seq(from = 1939, to = 2029 , 10)
 listOfYears <- c("1940-1949", "1950-1959", "1960-1969", "1970-1979", "1980-1989", "1990-1999", "2000-2009", "2010-2019", "2020-2029")
@@ -69,7 +68,7 @@ combined <- paste(listOfYears, paste(round(PPPercentage*100, 2), "%"))
 
 pie(PPPercentage,combined, col=Colors, main="Percipitation by decade")
 
-dev.new()
+#Box plot below
 climateData$extreme <- c(climateData$SN+climateData$TS+climateData$TN+climateData$GR)
 print(climateData)
 
@@ -79,3 +78,7 @@ big<- which(climateData$extreme == max(climateData$extreme))
 boxplot(climateData$extreme)
 text(x=1, y = 7, labels = climateData$Year[small])
 text(x=1, y = 51, labels = climateData$Year[big])
+
+#histogram below
+hist(x = climateData$V, breaks = c("10-11", "11-12", "12-13", "13-14", "14-15"))
+
