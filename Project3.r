@@ -66,7 +66,7 @@ Colors <- c("white", "antiquewhite4", "aliceblue", "antiquewhite3", "antiquewhit
 combined <- paste(listOfYears, paste(round(PPPercentage*100, 2), "%"))
 
 
-pie(PPPercentage,combined, col=Colors, main="Percipitation by decade")
+##################pie(PPPercentage,combined, col=Colors, main="Percipitation by decade")
 
 #Box plot below
 climateData$extreme <- c(climateData$SN+climateData$TS+climateData$TN+climateData$GR)
@@ -74,7 +74,7 @@ print(climateData)
 
 small <- which(climateData$extreme == min(climateData$extreme))
 big<- which(climateData$extreme == max(climateData$extreme))
-boxplot(climateData$extreme, ylab = "number of extreme weather", main="average amount of extreme weather")
+###########################boxplot(climateData$extreme, ylab = "number of extreme weather", main="average amount of extreme weather")
 text(x=1, y = 7, labels = climateData$Year[small])
 text(x=1, y = 51, labels = climateData$Year[big])
 
@@ -89,13 +89,13 @@ text(hist_values$mids,                                      # Add values of hist
 #bargraph below
 #ColorsBP<-c(rbg(255, 255, climateData$RA, 1))
 print(rgb(1, 1, (climateData$RA/1000)*3))
-barplot(climateData$RA, ylim=c(0, 250), ylab="Rain days", xlab="year", main="Histogram of rain days to years", col=rgb(1, 1-(climateData$Year-1948)/74, (climateData$Year-1948)/74)) #col=rgb(1, (climateData$RA/1000)*4, (climateData$RA/1000)*4))
+#############################barplot(climateData$RA, ylim=c(0, 250), ylab="Rain days", xlab="year", main="Histogram of rain days to years", col=rgb(1, 1-(climateData$Year-1948)/74, (climateData$Year-1948)/74)) #col=rgb(1, (climateData$RA/1000)*4, (climateData$RA/1000)*4))
 mtext(1948, 1, at =0)
 mtext(2022, 1, at =81)
 
 #scatter plot
 print(climateData$Year)
-plot(y = climateData$T,x=climateData$Year,  xlab="years", ylab="temp",main="temperture throughout the years", ylim=c(0, 20), xlim=c(1948, 2022))
+#############################plot(y = climateData$T,x=climateData$Year,  xlab="years", ylab="temp",main="temperture throughout the years", ylim=c(0, 20), xlim=c(1948, 2022))
 
 #Yes the annual temperature does seem to be increasing.
 
@@ -104,3 +104,96 @@ plot(y = climateData$T,x=climateData$Year,  xlab="years", ylab="temp",main="temp
 #there are no facts that can back this up. This trend is most likely
 #due to technology evolving through the years, causing more global polution, 
 #leading to the increased temperatures.The two are corelated, but not causational.
+
+#fizzbuzz
+
+nums <- 1: 100
+
+for(x in nums){
+   s <- x
+   if(x%%2 == 0){
+      s = paste(s, "fizz", sep=" ")
+   }
+   if(x%%3 == 0){
+      s = paste(s, "buzz", sep=" ")
+   }
+   cat(s, fill=TRUE)
+}
+
+#fibonacci sequence
+fibonacci <- function(n){
+   fibed <- c(0, 1)
+   print(0);
+   if(n>=2){
+      print(1)
+   }
+   if(n>=3){
+      count <- 3: n
+      for(x in count){
+         print(fibed[x-1] + fibed[x-2])
+         fibed <- append(fibed, fibed[x-1] + fibed[x-2])
+      }
+   }
+}
+
+fibonacci(10)
+
+#primes
+prime <- function(n){
+   lim <- 2:n
+   for(x in lim){
+      check <- 2:(x-1)
+      printThis <- TRUE
+      for(f in check){
+         for(s in check){
+            if (f*s == x){
+               printThis<-FALSE
+            }
+         }
+      }
+      if(printThis){
+         print(x)
+      }
+   }
+}
+
+print("Primes")
+prime(10)
+
+#sorting
+sort <- function(vect){
+   lim <- 1:length(vect)
+   for(x in lim){
+      for(f in lim){
+         if(vect[f]>vect[x]){
+            temp <- vect[f]
+            vect[f]<-vect[x]
+            vect[x]<-temp
+         }
+      }
+   }
+   return(vect)
+}
+
+print("sorting")
+print(sort(c(5, 2, 3, 1, 4)))
+
+#Matrix transpose
+transpose <- function(mat){
+   row <- length(mat[1, ])
+   col <- length(mat)/length(mat[1, ])
+   rMat <- matrix(nrow=3, ncol=3)
+   addC<-c()
+
+   for(r in (1:row)){
+      for(c in (1:col)){
+         rMat[r, c]<- mat[c, r]
+      }
+      rMat<- cbind(rMat, addC)
+      addC<-c()
+   }
+   return(rMat)
+}
+
+thisMat <- matrix(c("a", "b", "c", "d", "e", "f", "g", "h", "i"), nrow=3, ncol=3)
+print(transpose(thisMat))
