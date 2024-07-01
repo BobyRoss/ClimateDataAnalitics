@@ -75,8 +75,8 @@ print(climateData)
 small <- which(climateData$extreme == min(climateData$extreme))
 big<- which(climateData$extreme == max(climateData$extreme))
 ###########################boxplot(climateData$extreme, ylab = "number of extreme weather", main="average amount of extreme weather")
-text(x=1, y = 7, labels = climateData$Year[small])
-text(x=1, y = 51, labels = climateData$Year[big])
+#text(x=1, y = 7, labels = climateData$Year[small])
+#text(x=1, y = 51, labels = climateData$Year[big])
 
 #histogram below
 hist_values<-hist(x = climateData$V, breaks=10, ylim = c(0, 30), xlab="Avg. windspeed", ylab="frequency", main="Histogram of windspeed frequency")
@@ -140,25 +140,62 @@ fibonacci(10)
 
 #primes
 prime <- function(n){
-   lim <- 2:n
+   primesvect <- c(2, 3, 5, 7)
+   lim <- 7:n
    for(x in lim){
-      check <- 2:(x-1)
       printThis <- TRUE
-      for(f in check){
-         for(s in check){
-            if (f*s == x){
-               printThis<-FALSE
+      if(x%%2!=0 && x%%5!=0){
+         for(n in primesvect){
+            if(x%%n == 0){
+               printThis <- FALSE
+               break
+            }
+            if(n>sqrt(x)){
+               break
             }
          }
+         if(printThis){
+            primesvect <- c(primesvect, x)
+         }
       }
-      if(printThis){
-         print(x)
-      }
+      #if((x!=2 && x%%2==0) || (x!=5 && x%%5==0) || rec(x)%%3==0){
+      #   printThis<-FALSE
+      #}
+      
+
+      #for(m in primesvect){
+      #   if((sqrt(x)-m)<0){
+      #      break
+      #   }else if(sqrt(x)-m < close){
+     #       close<-sqrt(x) 
+      #   }
+      #}
+
+      #for(n in primesvect){
+      #   if(n > close){
+      #      break
+      #   }else if(x%%n==0){
+      #      printThis<-FALSE
+      #   }
+      #}
+
    }
+   return(primesvect)
 }
 
+#rec <- function(n){
+#   if(n/10 == 0){
+#      return(as.integer(n))
+#   }
+#   return(as.integer((n%%10)+rec(n/10)))
+#}
+
 print("Primes")
-prime(10)
+timeStart <- Sys.time()
+print(prime(10000))
+timeEnd <- Sys.time()
+print(timeEnd-timeStart)
+
 
 #sorting
 sort <- function(vect){
@@ -175,25 +212,22 @@ sort <- function(vect){
    return(vect)
 }
 
-print("sorting")
-print(sort(c(5, 2, 3, 1, 4)))
+#print("sorting")
+#print(sort(c(5, 2, 3, 1, 4)))
 
 #Matrix transpose
 transpose <- function(mat){
    row <- length(mat[1, ])
    col <- length(mat)/length(mat[1, ])
-   rMat <- matrix(nrow=3, ncol=3)
-   addC<-c()
+   rMat <- matrix(nrow=row, ncol=col)
 
    for(r in (1:row)){
       for(c in (1:col)){
-         rMat[r, c]<- mat[c, r]
+         rMat[c, r]<- mat[c, r]
       }
-      rMat<- cbind(rMat, addC)
-      addC<-c()
    }
    return(rMat)
 }
 
 thisMat <- matrix(c("a", "b", "c", "d", "e", "f", "g", "h", "i"), nrow=3, ncol=3)
-print(transpose(thisMat))
+#print(transpose(thisMat))
