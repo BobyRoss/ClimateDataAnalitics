@@ -140,24 +140,43 @@ fibonacci(10)
 
 #primes
 prime <- function(n){
-   primesvect <- c(2, 3, 5, 7)
-   lim <- 7:n
-   for(x in lim){
-      printThis <- TRUE
-      if(x%%2!=0 && x%%5!=0){
-         for(n in primesvect){
-            if(x%%n == 0){
-               printThis <- FALSE
-               break
-            }
-            if(n>sqrt(x)){
-               break
-            }
+   tof <- vector(mode="logical", length = n) 
+
+   primesvect <- c()
+   lim <- 2:n
+
+   for(index in lim){
+      if(tof[index] == FALSE){
+         j<-index*index
+         if(j>n){
+            return(which(!tof))
          }
-         if(printThis){
-            primesvect <- c(primesvect, x)
+         for(num in seq(j,n,by=index)){
+            tof[num]<-TRUE
          }
+         
       }
+   }
+
+   
+   #primesvect <- c(2, 3, 5, 7)
+   #lim <- 7:n
+   #for(x in lim){
+      #printThis <- TRUE
+      #if(x%%2!=0 && x%%5!=0){
+         #for(n in primesvect){
+            #if(x%%n == 0){
+               #printThis <- FALSE
+               #break
+            #}
+            #if(n>sqrt(x)){
+               #break
+            #}
+         #}
+         #if(printThis){
+            #primesvect <- c(primesvect, x)
+         #}
+      #}
       #if((x!=2 && x%%2==0) || (x!=5 && x%%5==0) || rec(x)%%3==0){
       #   printThis<-FALSE
       #}
@@ -179,8 +198,7 @@ prime <- function(n){
       #   }
       #}
 
-   }
-   return(primesvect)
+
 }
 
 #rec <- function(n){
@@ -192,7 +210,7 @@ prime <- function(n){
 
 print("Primes")
 timeStart <- Sys.time()
-print(prime(10000))
+print(prime(1000000))
 timeEnd <- Sys.time()
 print(timeEnd-timeStart)
 
