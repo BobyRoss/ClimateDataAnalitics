@@ -72,13 +72,35 @@ pie(PPPercentage,combined, col=Colors, main="Percipitation by decade")
 climateData$extreme <- c(climateData$SN+climateData$TS+climateData$TN+climateData$GR)
 print(climateData)
 
-boxplot(climateData$extreme)
 small <- which(climateData$extreme == min(climateData$extreme))
 big<- which(climateData$extreme == max(climateData$extreme))
-boxplot(climateData$extreme)
+boxplot(climateData$extreme, ylab = "number of extreme weather", main="average amount of extreme weather")
 text(x=1, y = 7, labels = climateData$Year[small])
 text(x=1, y = 51, labels = climateData$Year[big])
 
 #histogram below
-hist(x = climateData$V, breaks = c("10-11", "11-12", "12-13", "13-14", "14-15"))
+hist_values<-hist(x = climateData$V, breaks=10, ylim = c(0, 30), xlab="Avg. windspeed", ylab="frequency", main="Histogram of windspeed frequency")
+text(hist_values$mids,                                      # Add values of histogram on top of bars
+     hist_values$counts,
+     labels = hist_values$counts,
+     adj = c(0.5, - 0.5))
+#the 13-14 bin is the most frequent
 
+#bargraph below
+#ColorsBP<-c(rbg(255, 255, climateData$RA, 1))
+print(rgb(1, 1, (climateData$RA/1000)*3))
+barplot(climateData$RA, ylim=c(0, 250), ylab="Rain days", xlab="year", main="Histogram of rain days to years", col=rgb(1, 1-(climateData$Year-1948)/74, (climateData$Year-1948)/74)) #col=rgb(1, (climateData$RA/1000)*4, (climateData$RA/1000)*4))
+mtext(1948, 1, at =0)
+mtext(2022, 1, at =81)
+
+#scatter plot
+print(climateData$Year)
+plot(y = climateData$T,x=climateData$Year,  xlab="years", ylab="temp",main="temperture throughout the years", ylim=c(0, 20), xlim=c(1948, 2022))
+
+#Yes the annual temperature does seem to be increasing.
+
+#You cannot say that there is a causation between the 
+#years and the temperature as although the two seem corelated, 
+#there are no facts that can back this up. This trend is most likely
+#due to technology evolving through the years, causing more global polution, 
+#leading to the increased temperatures.The two are corelated, but not causational.
