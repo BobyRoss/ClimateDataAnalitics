@@ -334,8 +334,8 @@ while(game){
    a <- 1
    n <- 0
    guess<-readline(prompt="guess a letter!")
-   if(guess == ""){
-
+   if(guess == "" || nchar(guess)>1){
+      print("incorrect format. Type 1 character only")
    }else if(grepl(guess, randWord, fixed=TRUE)){
       cPos <- unlist(gregexpr(guess, randWord))
       currentFound<-""
@@ -348,8 +348,7 @@ while(game){
          }else{
             n<-n+1
             currentFound<-paste(currentFound, "_")
-         }
-      }
+         }}
       cF<-gsub(" ", "", currentFound)
       print(paste("nice, ", guess, " is in the word!"))
       print(paste("current letters found: ", cF))
