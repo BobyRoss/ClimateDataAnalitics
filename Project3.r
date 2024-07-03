@@ -79,22 +79,22 @@ big<- which(climateData$extreme == max(climateData$extreme))
 #text(x=1, y = 51, labels = climateData$Year[big])
 
 #histogram below
-hist_values<-hist(x = climateData$V, breaks=10, ylim = c(0, 30), xlab="Avg. windspeed", ylab="frequency", main="Histogram of windspeed frequency")
-text(hist_values$mids,                                      # Add values of histogram on top of bars
-     hist_values$counts,
-     labels = hist_values$counts,
-     adj = c(0.5, - 0.5))
+#hist_values<-hist(x = climateData$V, breaks=10, ylim = c(0, 30), xlab="Avg. windspeed", ylab="frequency", main="Histogram of windspeed frequency")
+#text(hist_values$mids,                                      # Add values of histogram on top of bars
+     #hist_values$counts,
+     #labels = hist_values$counts,
+     #adj = c(0.5, - 0.5))
 #the 13-14 bin is the most frequent
 
 #bargraph below
 #ColorsBP<-c(rbg(255, 255, climateData$RA, 1))
-print(rgb(1, 1, (climateData$RA/1000)*3))
+#print(rgb(1, 1, (climateData$RA/1000)*3))
 #############################barplot(climateData$RA, ylim=c(0, 250), ylab="Rain days", xlab="year", main="Histogram of rain days to years", col=rgb(1, 1-(climateData$Year-1948)/74, (climateData$Year-1948)/74)) #col=rgb(1, (climateData$RA/1000)*4, (climateData$RA/1000)*4))
-mtext(1948, 1, at =0)
-mtext(2022, 1, at =81)
+#mtext(1948, 1, at =0)
+#mtext(2022, 1, at =81)
 
 #scatter plot
-print(climateData$Year)
+#print(climateData$Year)
 #############################plot(y = climateData$T,x=climateData$Year,  xlab="years", ylab="temp",main="temperture throughout the years", ylim=c(0, 20), xlim=c(1948, 2022))
 
 #Yes the annual temperature does seem to be increasing.
@@ -117,7 +117,7 @@ for(x in nums){
    if(x%%3 == 0){
       s = paste(s, "buzz", sep=" ")
    }
-   cat(s, fill=TRUE)
+   #cat(s, fill=TRUE)
 }
 
 #fibonacci sequence
@@ -136,7 +136,7 @@ fibonacci <- function(n){
    }
 }
 
-fibonacci(10)
+#fibonacci(10)
 
 #primes
 prime <- function(n){
@@ -208,20 +208,21 @@ prime <- function(n){
 #   return(as.integer((n%%10)+rec(n/10)))
 #}
 
-print("Primes")
-timeStart <- Sys.time()
-print(prime(1000000))
-timeEnd <- Sys.time()
-print(timeEnd-timeStart)
+#print("Primes")
+#timeStart <- Sys.time()
+#print(prime(1000000))
+#timeEnd <- Sys.time()
+#print(timeEnd-timeStart)
 
 
 #sorting
 sort <- function(vect){
    lim <- 1:length(vect)
    for(x in lim){
-      for(f in lim){
-         if(vect[f]>vect[x]){
+      for(f in x:length(lim)){
+         if(vect[f]<vect[x]){
             temp <- vect[f]
+            as.integer
             vect[f]<-vect[x]
             vect[x]<-temp
          }
@@ -230,8 +231,72 @@ sort <- function(vect){
    return(vect)
 }
 
-#print("sorting")
-#print(sort(c(5, 2, 3, 1, 4)))
+sizes <- c(10, 100, 1000,5000, 10000)
+totalT <- c()
+for(num in sizes){
+   vect <- runif(n=num, min=1, max=10000)
+   timeStart <- Sys.time()
+   sort(vect)
+   timeEnd <- Sys.time()
+   totalT <- c(totalT, timeEnd-timeStart)
+}
+plot(y = totalT ,x=sizes,type="o",  xlab="sizes", ylab="total time",main="array size to time", ylim=c(0, 10), xlim=c(0, 10000))
+
+#----------------------------------------------
+
+merge <- function(vecA, vecB){
+   if(length(vecA)==1 && length(vecB)==1){
+      if(vecA[1]<vecB[1]){
+         return(c(vecA, vecB))
+      }
+      return(c(vecB, vecA))
+   }else{
+      d2A <- as.integer(length(vecA)/2) #2 #4
+      d2B <- as.integer(length(vecB)/2) #1 #3
+      newA <- merge(vecA[1:d2A],vecA[(d2A+1):length(vecA)])
+      newB<- merge(vecB[1:d2B],vecB[(d2B+1):length(vecB)])
+      if(length(vecA)==1 && length(vecB)==2){
+         newA <- vecA
+      }else if(length(vecB)==1 && length(vecA)==2){
+         newB <- vecB
+      }
+      i <- 1
+      j <- 1
+      rVec <- c()
+      while(i<=length(newA) && j<=length(newB)){
+         if(newA[i] < newB[j]){
+            rVec<-c(rVec, newA[i])
+            i<-i+1
+         }else{
+            rVec<-c(rVec, newB[j])
+            j<-j+1
+         }
+      }
+      if(i>length(newA)){
+         return(c(rVec, newB[j:length(newB)]))
+      }
+      return(c(rVec, newA[i:length(newA)]))
+   }
+}
+
+sizes <- c(10, 100, 1000,5000, 10000)
+totalT <- c()
+for(num in sizes){
+   vect <- runif(n=num, min=1, max=100000)
+   lim <- as.integer(length(vect)/2)
+   timeStart <- Sys.time()
+   timeEnd <- Sys.time()
+   totalT <- c(totalT, timeEnd-timeStart)
+}
+plot(y=totalT ,x=sizes, type="o", xlab="sizes", ylab="total time",main="array size to time", ylim=c(0, 5), xlim=c(0, 10000))
+
+
+#vect <- runif(n=10000, min=1, max=100)
+#lim <- as.integer(length(vect)/2)
+#timeStart <- Sys.time()
+#print(merge(vect[1:lim], vect[lim+1:(length(vect)-(lim))]))
+#timeEnd <- Sys.time()
+#print(timeEnd-timeStart)
 
 #Matrix transpose
 transpose <- function(mat){
@@ -249,3 +314,50 @@ transpose <- function(mat){
 
 thisMat <- matrix(c("a", "b", "c", "d", "e", "f", "g", "h", "i"), nrow=3, ncol=3)
 #print(transpose(thisMat))
+
+input<- readline(prompt="start?")
+randWord<- "awsome"
+cF<- ""
+len<-1:nchar(randWord)
+
+for(x in len){
+   cF<-paste(cF, "_", "")
+}
+cF <- gsub(" ", "", cF)
+
+game<-FALSE
+if(input == "yes"){
+   game<-TRUE
+}
+
+while(game){
+   a <- 1
+   n <- 0
+   guess<-readline(prompt="guess a letter!")
+   if(guess == ""){
+
+   }else if(grepl(guess, randWord, fixed=TRUE)){
+      cPos <- unlist(gregexpr(guess, randWord))
+      currentFound<-""
+      for(i in (1:nchar(randWord))){
+         if(substr(cF, i, i) != "_" && substr(cF, i, i) != " "){
+            currentFound <- paste(currentFound, substr(cF, i, i))
+         }else if(a<=nchar(cPos) && i==cPos[a]){
+            currentFound <- paste(currentFound, guess)
+            a<-a+1
+         }else{
+            n<-n+1
+            currentFound<-paste(currentFound, "_")
+         }
+      }
+      cF<-gsub(" ", "", currentFound)
+      print(paste("nice, ", guess, " is in the word!"))
+      print(paste("current letters found: ", cF))
+
+      if(n==0){
+         print("congratuations! you won!")
+         game<-FALSE
+         break
+      }
+   }
+}
